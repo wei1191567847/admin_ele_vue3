@@ -1,0 +1,11 @@
+{
+    "code":200,
+    "message":"登录成功",
+    "data":{
+        "id":1,
+        "username":"123@qq.com",
+        "gender":"nan",
+        "age":18,
+        "token":"xxxxx"
+    }
+}
