@@ -1,0 +1,32 @@
+li.el-submenu .el-submenu__title {
+  font-size: 17px;
+  transition: all 0.5s ease 0s;
+}
+
+li.el-submenu.is-opened .el-submenu__title {
+  background-color: #ce6a6a !important;
+}
+
+li.el-submenu .el-menu-item {
+  padding-left: 60px !important;
+  font-size: 14px !important;
+}
+
+li.el-submenu .el-menu-item.is-active {
+  background-color: rgba(17, 235, 180, 0.4) !important;
+}
+
+#layout.close li.el-submenu.is-active .el-submenu__title {
+  background-color: #ce6a6a !important;
+}
+
+.salse-view .el-menu--horizontal > .el-menu-item.is-active {
+  color: #ce6a6a !important;
+  border-bottom: none !important;
+  border-bottom-color: #fff !important;
+  font-weight: 600 !important;
+}
+
+.salse-view .el-card__header {
+  padding: 0px !important;
+}

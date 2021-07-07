@@ -9,8 +9,10 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "echarts": "^5.1.2",
     "element-plus": "^1.0.2-beta.53",
     "vue": "^3.0.0",
+    "vue-echarts": "^6.0.0-rc.6",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
@@ -21,7 +23,8 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "sass": "^1.26.5",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "svg-sprite-loader": "^6.0.9"
   },
   "browserslist": [
     "> 1%",

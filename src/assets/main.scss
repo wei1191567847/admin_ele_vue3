@@ -1,4 +1,8 @@
 //1.消除浏览器的差异化
 @import './reset.scss';
 
-//2.主题配置
+//2.主题配置  变量 函数
+@import'./config.scss';
+
+//3.针对element ui 样式调整
+@import './element.scss'

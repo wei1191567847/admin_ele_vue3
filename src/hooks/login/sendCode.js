@@ -2,10 +2,11 @@
 import { ElMessage } from 'element-plus'
 import {ref} from 'vue'
 
-export const send_code = (ruleForm,getCode)=>{
+export const send_code = (ruleForm,getCode,submitType)=>{
     const butText = ref('发送验证码')
     const butStatus = ref(false)
-    const num = 10    //倒计时时间
+    const num = 60    //倒计时时间
+    const message = ref('')
 
     //??
     let down = null   //倒计时定时器
@@ -31,10 +32,10 @@ export const send_code = (ruleForm,getCode)=>{
     },1000)
 }
 //点击发送验证码
-    const sendCode = ()=>{
-        ruleForm.code = ''
+const sendCode = ()=>{
+    ruleForm.code = ''
 //发送验证码之前邮箱必须填写
-    if(ruleForm.username == ''){
+if(ruleForm.username == ''){
     //提示消息
         ElMessage({
             showClose: true,
@@ -51,14 +52,20 @@ export const send_code = (ruleForm,getCode)=>{
     
     
     timer_60 = setTimeout(()=>{
-        getCode().then(res=>{
+        //请求验证码
+        const _data ={
+            username:'17310920903@163.com',
+            module:submitType.value == '登录'?'login' : 'register'
+        }
+        getCode(_data).then(res=>{
             ElMessage({
                 showClose: true,
-                message: `验证码:${res.code}`,
+                message: `验证码:${res}`,
                 type: 'success'
             })
             //倒计时时间让用户有60秒有效时间输入
-        countDown(num)
+            countDown(num)
+            message.value = res
         })
     },3000)
      
@@ -74,7 +81,7 @@ export const send_code = (ruleForm,getCode)=>{
         clearInterval(down)
     }
     return{
-        butText,butStatus,down,timer_60,sendCode,countDown,
+        butText,butStatus,down,timer_60,sendCode,countDown,message,
         clearTimers,updateCodeStatus
     }
 }

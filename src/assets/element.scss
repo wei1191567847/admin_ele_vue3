@@ -1,0 +1,46 @@
+//调整一级导航的文字样式
+li.el-submenu{
+    .el-submenu__title{
+        font-size:17px;
+        transition:(all .5s ease 0s);
+    }
+//选中一级菜单的背景
+    &.is-opened .el-submenu__title{
+        background-color:#ce6a6a !important;
+    }
+}
+
+
+//调整二级菜单的样式
+li.el-submenu .el-menu-item{
+    padding-left:60px !important;
+    font-size:14px !important;
+    &.is-active{
+        background-color:rgba(#11ebb4,.4) !important;
+    }
+}
+
+//缩起nav  让选中的一级菜单保持选中的背景色
+#layout{
+    &.close{
+        li.el-submenu{
+            &.is-active .el-submenu__title{
+                background-color:#ce6a6a !important;
+            }
+        }
+    }
+}
+
+//修改 销售量和访问量的菜单样式
+.salse-view .el-menu--horizontal>.el-menu-item{
+    &.is-active{
+        color:#ce6a6a !important;
+        border-bottom:none !important;
+        border-bottom-color:#fff !important;
+        // font-size:15px !important;
+        font-weight: 600 !important;
+    }
+}
+.salse-view .el-card__header{
+    padding:0px !important;
+}

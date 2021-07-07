@@ -16,7 +16,7 @@
                      <label>密码</label>
                      <el-input type="text" v-model="ruleForm.password"></el-input>
                 </el-form-item>
-                <el-form-item v-if='submiType == "注册"' class="form-item" prop="password1" size="mini">
+                <el-form-item v-if='submitType == "注册"' class="form-item" prop="password1" size="mini">
                      <label>确认密码</label>
                      <el-input type="password" v-model="ruleForm.password"></el-input>
                 </el-form-item>
@@ -24,7 +24,7 @@
                      <label>验证码</label>
                      <el-row :gutter="20">
                         <el-col :span='15'>
-                            <el-input v-model='ruleForm.code' minlength='4' maxlength='6'/>
+                            <el-input v-model='ruleForm.code' minlength='6' maxlength='6'/>
                         </el-col>
                         <el-col :span='9'>
                             <el-button type='success' class="block width" :disabled='butStatus' @click='sendCode'>{{butText}}</el-button>
@@ -32,7 +32,7 @@
                      </el-row>
                 </el-form-item>
                  <el-form-item class="form-item" size="mini" >
-                    <el-button type="success" @click="submitForm">{{ submiType }}</el-button>
+                    <el-button type="success" @click="submitForm">{{ submitType }} {{token}}</el-button>
                 </el-form-item>
              </el-form>
              <!--form 结束-->
@@ -42,11 +42,18 @@
 </template>
 
 <script>
+/*
+    axios 请求拦截    响应拦截
+ */
 import {login_register_form_data} from '@/hooks/login/formValidate.js'
 import {send_code} from '@/hooks/login/sendCode.js'
 import { reactive, watchEffect ,ref,onUnmounted} from 'vue'
 import { ElMessage } from 'element-plus'
-import {getCode,login} from '@/api/login.js'
+import {getCode,register} from '@/api/login.js'
+
+import {useStore} from 'vuex'
+import {createNamespacedHelpers} from 'vuex'
+const {mapState,mapActions,mapGetters} = createNamespacedHelpers('some/nested/module')
 
 export default {
         setup(props,cxt){
@@ -64,9 +71,9 @@ export default {
                 }
             ])
         //引入from 表单验证相关
-        const {ruleForm,rules,submiType,formRef} = login_register_form_data()
+        const {ruleForm,rules,submitType,formRef} = login_register_form_data()
         //引入code相关
-        const {butText,butStatus,sendCode,clearTimers,updateCodeStatus} = send_code(ruleForm,getCode)
+        const {butText,butStatus,sendCode,clearTimers,updateCodeStatus,message} = send_code(ruleForm,getCode,submitType)
 
 
 //computed
@@ -74,19 +81,30 @@ export default {
           const cur = menuTab.filter(menu=>{
               return menu.current
           })
-          submiType.value = cur[0].text
+          submitType.value = cur[0].text
       })
 
 //methods   
+        const store = useStore()
         const doLogin = ()=>{
-            //登录业务
-            login().then(res=>{
-                console.log('user:',res)
+            //调用action 登录业务
+            store.dispatch('app/login',{
+                username:ruleForm.username,
+                password:ruleForm.password,
+                code:ruleForm.code
             })
+          
         }
 
         const doRegister = ()=>{
-            
+            //注册业务
+            register({
+                username:ruleForm.username,
+                password:ruleForm.password,
+                code:ruleForm.code
+            }).then(res=>{
+                
+            })
         }
         //切换登录和注册                   
        const changeMenuTab = (e)=>{
@@ -108,12 +126,17 @@ export default {
                 //清除定时器
                 clearTimers()
             }
-
+            // mapGetters 
+            const token = computed({
+                
+            })
+     
+        //表单提交
         const submitForm = ()=>{
             //验证表单的每一项是否通过
             formRef.value.validate((valid,obj) =>{
                 if(valid){
-                    submiType.value === '登录' ? doLogin() : doRegister()
+                    submitType.value === '登录' ? doLogin() : doRegister()
                 }else{
                     ElMessage({
                         showClose: true,
@@ -143,8 +166,9 @@ export default {
             //ref
             butText,butStatus,
             //methods
-            submiType,
-            changeMenuTab,sendCode,formRef,submitForm
+            submitType,
+            changeMenuTab,sendCode,formRef,submitForm,
+            token
         }
     },
          

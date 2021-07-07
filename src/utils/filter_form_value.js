@@ -14,6 +14,7 @@ export const filterValue=(value)=>{
     for (var i = 0; i < value.length; i++) {
     rs = rs+value.substr(i, 1).replace(pattern, ''); 
     } 
+    console.log('',rs)
     return rs;
 }
 
@@ -32,10 +33,11 @@ export const validate_email = (value)=>{
 //2.验证密码
 export const validate_password = (value)=>{
     let reg = /^(?!\D+$)(?![^a-zA-Z]+$)\S{6,20}$/;
+
     return reg.test(value)
 }
 //3.验证code
 export const validate_code = (value)=>{
-    let reg = /^[a-z0-9]{4}$/
+    let reg = /^[a-z0-9]{6}$/
     return reg.test(value)
 }

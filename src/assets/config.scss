@@ -1,0 +1,18 @@
+//侧边导航宽度
+$navWidth:200px;
+$navMinWidth:70px;
+
+//主题颜色
+
+//字体大小
+
+//公共函数
+@mixin transition($type,$value){
+    //浏览器的兼容性
+    // -webkit-transition:all .3s ease 0s;
+    -webkit-#{$type}:$value;
+    -moz-#{$type}:$value;
+    -o-#{$type}:$value;
+    -ms-#{$type}:$value;
+    #{$type}:$value;
+}

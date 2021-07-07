@@ -2,13 +2,15 @@ import  { reactive, ref } from 'vue'
 import {filterEmail,validate_email,validate_password,validate_code} from '@/utils/filter_form_value.js'  
 export const login_register_form_data = ()=>{
 
+
     //表单数据
         const ruleForm = reactive({
-                username: '1191567847@163.com',
+                username: '17310920903@163.com',
                 password:"",
                 password1:'',
                 code:''
             })
+
 
         //表单的引用
         const formRef = ref(null)
@@ -23,21 +25,23 @@ export const login_register_form_data = ()=>{
                 }
             }
 
+
         const validataPass = (rule,value,callback)=>{
                 validate_password(value)
                  if(value === '') {
-                    callback(new Error('密码必须填~~'))
+                    callback(new Error('密码必须填写'))
                 }else if(!validate_password(value)){
                     callback(new Error('密码必须是6到20位'))
                     
                 }else{
-
+                    callback();
                 }
             }
 
+
         const validataPass1 = (rule,value,callback)=>{
                  if(value === '') {
-                    callback(new Error('重复密码必须填~~'))
+                    callback(new Error('重复密码必须填'))
                 }else if(value !== ruleForm.password){
                     callback(new Error('两次密码必须一致'))
                 }else{
@@ -45,15 +49,18 @@ export const login_register_form_data = ()=>{
                 }
             }
 
+
         const validateCode = (rule,value,callback)=>{
                 if(value === '') {
                     callback(new Error('验证码必须填写'))
-                }else if(validate_code(value)){
+                }else if(!validate_code(value)){
                     callback(new Error('验证码格式错误'))
                 }else{
                     callback();
                 }
             }
+
+
 
 
         const rules = reactive({
@@ -71,7 +78,9 @@ export const login_register_form_data = ()=>{
                     ]
             }) 
 
-        const submiType = ref('登录')
+
+        const submitType = ref('登录')
+
 
         return{
             ruleForm,
@@ -80,8 +89,9 @@ export const login_register_form_data = ()=>{
             validataPass1,
             validataPass,
             validatorName,
-            submiType,
+            submitType,
             formRef,
+
 
         }
 }
