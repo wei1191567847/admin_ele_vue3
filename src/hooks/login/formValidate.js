@@ -5,7 +5,7 @@ export const login_register_form_data = ()=>{
 
     //表单数据
         const ruleForm = reactive({
-                username: '17310920903@163.com',
+                username: '',
                 password:"",
                 password1:'',
                 code:''

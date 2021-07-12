@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-import {getToken} from '@/utils/localStorage.js'
+import {getToken,getUserName} from '@/utils/cookie.js'
 
 
 //添加请求拦截器 1.vuex 2.localStorage
 const unUseToken = ['/api/login/','/api/register/','/api/getSms/'] 
 axios.interceptors.request.use(function(config){
 if(!unUseToken.includes(config.url)){
-
-    config.headers.token = getToken('token')
+    config.headers.Tokey = getToken()
+    config.headers.UserName = getUserName()
 }
     
     

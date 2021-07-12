@@ -1,11 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-
 import Layout from '@/views/Layout/index.vue'
-const routes = [
+export const defaultRoutes = [
   {
     path: "/",
     redirect: "/home",
-    name: 'Home',
+    name: '/Home',
     show:false,
     meta:{
       name:'根路由'
@@ -50,14 +49,20 @@ const routes = [
       }
     ]
   },
-  //用户
-  {
+
+];
+
+export const asyncRoutes = [
+   //用户
+   {
     path:'/user',
     name:'User',  //用户
     component:Layout,
     show:true,
     meta:{
-      name:'用户'
+      name:'用户',
+      iconName:'user',
+      roles:['manger','salse']
     },
     children:[
       {
@@ -65,7 +70,8 @@ const routes = [
         name:'UserIndex',
         component:()=> import('@/views/User/userIndex.vue'),
         meta:{
-          name:'浏览用户'
+          name:'浏览用户',
+          btns:['user.index']
         }
       },
       {
@@ -73,7 +79,8 @@ const routes = [
         name:'UserAdd',
         component:()=> import('@/views/User/userAdd.vue'),
         meta:{
-          name:'添加用户'
+          name:'添加用户',
+          btns:['user.add']
         }
       }
     ]
@@ -86,7 +93,8 @@ const routes = [
     show:true,
     meta:{
       name:'分类',
-      iconName:'category'
+      iconName:'category',
+      roles:['salse']
     },
     children:[
       {
@@ -94,7 +102,8 @@ const routes = [
         name:'CategoryIndex',
         component:()=> import('@/views/Category/categoryIndex.vue'),
         meta:{
-          name:'浏览分类'
+          name:'浏览分类',
+          btns:['category.index']
         }
       },
       {
@@ -102,26 +111,20 @@ const routes = [
         name:'CategoryAdd',
         component:()=> import('@/views/Category/categoryAdd.vue'),
         meta:{
-          name:'添加分类'
+          name:'添加分类',
+          btns:['category.add']
         }
       }
     ]
   },
+]
 
-];
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes,
+  routes:defaultRoutes
 });
 
-router.beforeEach((to,from,next)=>{
-  next()
-  // if(true){ //未登录
-  //   next('/login')
-  // }else{  //登录
-  //   next()
-  // }
-})
+
 
 export default router;

@@ -26,6 +26,17 @@ export const register = async (data)=>{
         url:"/api/register/",
         data
     })
-    console.log(res)
     return res
 }
+
+export const getRoles = async (data)=>{
+    const res = await axios.request({
+        method:"post",
+        url:"/api/role/",
+        data
+        
+    })
+
+    return res
+}
+

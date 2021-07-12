@@ -1,12 +1,12 @@
 <template>
     <div class="salse-view">
         <el-row :style='{padding:"20px"}'>
-            <!--<el-col>
+            <el-col>
                 <el-card>
                     <TotalType/>
                 </el-card>
 
-            </el-col>-->
+            </el-col>
             <el-col>
                 <el-card body-style='{padding:"0px"}'>
                     <template #header>

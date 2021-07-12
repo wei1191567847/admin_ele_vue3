@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import app from './modules/app.js'
-
+import auth from './modules/auth.js'
 
 export default createStore({
   state: ()=>{
@@ -13,6 +13,6 @@ export default createStore({
   actions: {
   },
   modules: {
-    app
+    app,auth
   }
 })

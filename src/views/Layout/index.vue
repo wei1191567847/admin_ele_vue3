@@ -10,7 +10,7 @@
 import LayoutHeader from './components/Header'
 import LayoutContent from './components/Content'
 import LayoutNav from './components/Nav'
-import {isCollapseMenu} from '@/hooks/ui/isCollapseMenu.js'
+import {isCollapseMenu} from '@/hooks/vuex/isCollapseMenu.js'
 
 
 export default {

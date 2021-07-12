@@ -18,7 +18,7 @@
                 </el-form-item>
                 <el-form-item v-if='submitType == "注册"' class="form-item" prop="password1" size="mini">
                      <label>确认密码</label>
-                     <el-input type="password" v-model="ruleForm.password"></el-input>
+                     <el-input type="password" v-model="ruleForm.password1"></el-input>
                 </el-form-item>
                 <el-form-item class="form-item" prop="code" size="mini">
                      <label>验证码</label>
@@ -47,16 +47,16 @@
  */
 import {login_register_form_data} from '@/hooks/login/formValidate.js'
 import {send_code} from '@/hooks/login/sendCode.js'
-import { reactive, watchEffect ,ref,onUnmounted} from 'vue'
+import {computed, reactive, watchEffect ,ref,onUnmounted} from 'vue'
 import { ElMessage } from 'element-plus'
 import {getCode,register} from '@/api/login.js'
+import { useStore} from 'vuex'
+import {useRouter} from 'vue-router'
 
-import {useStore} from 'vuex'
-import {createNamespacedHelpers} from 'vuex'
-const {mapState,mapActions,mapGetters} = createNamespacedHelpers('some/nested/module')
 
 export default {
         setup(props,cxt){
+            // const a = computed(()=>store.getters['aap/xxx'])
 //data
         //菜单切换tab数据            
         const menuTab = reactive([
@@ -85,22 +85,28 @@ export default {
       })
 
 //methods   
+        
         const store = useStore()
+        const router = useRouter()
+        console.log(router)
         const doLogin = ()=>{
             //调用action 登录业务
             store.dispatch('app/login',{
                 username:ruleForm.username,
                 password:ruleForm.password,
                 code:ruleForm.code
+            }) .then(res=>{
+                router.push({
+                    name:'Console'
+                })
             })
-          
         }
 
         const doRegister = ()=>{
             //注册业务
             register({
                 username:ruleForm.username,
-                password:ruleForm.password,
+                password:ruleForm.password1,
                 code:ruleForm.code
             }).then(res=>{
                 
@@ -127,7 +133,7 @@ export default {
                 clearTimers()
             }
             // mapGetters 
-            const token = computed({
+            const token = computed(()=>{
                 
             })
      
@@ -167,8 +173,10 @@ export default {
             butText,butStatus,
             //methods
             submitType,
+            //computed
             changeMenuTab,sendCode,formRef,submitForm,
             token
+          
         }
     },
          

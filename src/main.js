@@ -1,9 +1,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import router from "./router";
+import router from "./router/index.js";
+import './router/auth.js'
 import store from "./store";
 import {registeSvgIcon} from './icons/index.js'
 
+import 'default-passive-events'
 
 
 //按需加载element组件的

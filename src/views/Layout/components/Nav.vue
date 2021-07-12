@@ -35,7 +35,7 @@
 
 import {onMounted, reactive ,ref } from 'vue'
 import {useRouter } from 'vue-router'
-import {isCollapseMenu} from '@/hooks/ui/isCollapseMenu.js'
+import {isCollapseMenu} from '@/hooks/vuex/isCollapseMenu.js'
 
 export default {
     setup(){

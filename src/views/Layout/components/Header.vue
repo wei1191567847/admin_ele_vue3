@@ -8,25 +8,38 @@
             <div class="user pull-left">
                 <img src="../../../assets/img/logo.png">
                 <span>xiaowei</span>
-                <el-button type="warning" size="mini">退出</el-button>
+
+                <svg-icon iconName='exit' iconClass='exit' @click="exit"/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import {isCollapseMenu} from '@/hooks/ui/isCollapseMenu.js'
+import {isCollapseMenu} from '@/hooks/vuex/isCollapseMenu.js'
+import {exit_} from '@/hooks/vuex/logout.js'
 export default {
     setup(){
         const {toggleCollapse,isCollapse} = isCollapseMenu()
+        const {exit} = exit_()
+        // const exit = ()=>{
+
+        // }
         return{
-            toggleCollapse,isCollapse
+            toggleCollapse,isCollapse,exit
         }
     }
 }
 </script>
 
 <style lang='scss' scoped>
+.exit{
+    position:absolute;
+    fill:red;
+    width:25px;
+    height:25px;
+    top:25px;
+}
 .open{
     width:40px;
     height:40px;

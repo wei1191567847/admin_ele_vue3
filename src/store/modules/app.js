@@ -1,19 +1,19 @@
 import {login} from '@/api/login.js'
-import {setToken} from '@/utils/localStorage.js'
+import {getToken,setToken,getUserName,setUserName,deleteToken,deleteUserName} from '@/utils/cookie.js'
 
 const state = ()=>{
     return{
         //全局属性
         islogin:false,
-        token:'',
+        token:getToken() || '',   //运算短路
         isCollapse:false,
-        user:{}
+        username:getUserName() || ''
     }
 }
 const getters = {
     isCollapse: state => state.isCollapse,
     token:state => state.token
-}
+} 
 
 const mutations = {
     SET_COLLAPSE:(state,paylod)=>{
@@ -25,8 +25,8 @@ const mutations = {
     SET_LOGIN:(state,flag)=>{
         state.islogin = flag
     },
-    SET_USER:(state,userObj)=>{
-        state.user = userObj
+    SET_USER:(state,username)=>{
+        state.user = username
     }
 }
 
@@ -34,22 +34,30 @@ const actions = {
     //异步请求
     login:({commit},requestData)=>{
         return new Promise((resolve,reject)=>{
-            login(requestData).then(res=>{
-                let result = res.data.data
-                console.log(result)
-                //设置token
-                commit('SET_TOKEN',result.token)
-                setToken('token',result.token)
+             login(requestData).then(res=>{
+                  let result=res.data.data
+                  console.log(res)
+                  //设置token
+                  commit('SET_TOKEN',result.token)
+                  commit('SET_USER',result.username)
+                  setToken(result.token)
+                  setUserName(result.username)
+                  //islogin
+                  commit('SET_LOGIN',true)
+                  //设置用户数据
+                  commit('SET_USER',result)
+                  resolve()
+             }).catch(err=>{
 
-                //设置islogin
-                commit('SET_LOGIN',true)
 
-                //设置用户数据
-                commit('SET_USER',result)
-            }).catch(err=>{
-
-            })
+             })
         })
+    },
+    exit:({commit})=>{
+        commit('SET_TOKEN','')
+        commit('SET_USER','')
+        deleteToken()
+        deleteUserName()
     }
 }
 

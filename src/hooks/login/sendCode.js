@@ -54,7 +54,7 @@ if(ruleForm.username == ''){
     timer_60 = setTimeout(()=>{
         //请求验证码
         const _data ={
-            username:'17310920903@163.com',
+            username:ruleForm.username,
             module:submitType.value == '登录'?'login' : 'register'
         }
         getCode(_data).then(res=>{
